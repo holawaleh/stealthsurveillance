@@ -1,0 +1,42 @@
+# =====================
+# Python
+# =====================
+senv/
+venv/
+.env
+.env.*
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# =====================
+# Node / Frontend
+# =====================
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =====================
+# Build / Cache
+# =====================
+.cache/
+.parcel-cache/
+.vite/
+
+# =====================
+# OS / Editor
+# =====================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# =====================
+# Logs
+# =====================
+*.log
