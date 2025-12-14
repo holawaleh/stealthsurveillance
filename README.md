@@ -9,6 +9,7 @@ This repository currently contains a **fully functional frontend MVP**, with moc
 ## 🚀 Features
 
 ### Frontend (Completed)
+
 - Dashboard overview
 - Camera management (Add / Edit / Delete)
 - Motion alerts view
@@ -19,6 +20,7 @@ This repository currently contains a **fully functional frontend MVP**, with moc
 - Mock authentication (no backend required)
 
 ### System Design (Ready)
+
 - Clear separation between:
   - Logs (system/device events)
   - Activity (user actions)
@@ -42,4 +44,3 @@ This repository currently contains a **fully functional frontend MVP**, with moc
 ---
 
 ## 📁 Project Structure
-
