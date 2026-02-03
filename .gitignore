@@ -42,3 +42,7 @@ Thumbs.db
 *.log
 
 surveillance/
+
+# Virtual Environment
+backend/senv/
+senv/
