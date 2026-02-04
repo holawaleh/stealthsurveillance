@@ -16,4 +16,5 @@ urlpatterns = [
     path("api/", include("camwork.urls")),
     # Add other app URLs here as needed
     # path('api/camera/', include('camera_api.urls')),
+    path("api/", include("camstats.urls")),
 ]
