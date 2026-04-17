@@ -1,42 +1,44 @@
-import { createContext, useContext, useState } from 'react';
-import type { ReactNode } from 'react';
+// src/contexts/AuthContext.tsx
+import { createContext, useContext, useState, ReactNode } from 'react';
 
-
-interface User {
-  id: string;
-  email: string;
-}
-
-interface AuthContextType {
-  user: User | null;
-  signOut: () => void;
-}
+type AuthContextType = {
+  user: any | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
+  isAuthenticated: boolean;
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  // mock logged-in user
-  const [user, setUser] = useState<User | null>({
-    id: 'demo-user',
-    email: 'demo@silentcamera.local',
-  });
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<any | null>(null);
 
-  const signOut = () => {
+  const login = async (email: string, password: string) => {
+    // TODO: Implement actual auth logic
+    console.log('Login attempt:', email);
+    setUser({ email, id: 'temp-id' });
+  };
+
+  const logout = () => {
     setUser(null);
-    console.log('Signed out (mock)');
   };
 
   return (
-    <AuthContext.Provider value={{ user, signOut }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      login, 
+      logout, 
+      isAuthenticated: !!user 
+    }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export function useAuth() {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useAuth must be used within AuthProvider');
   }
   return context;
-}
+};
