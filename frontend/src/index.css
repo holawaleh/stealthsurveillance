@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 🔴 CRITICAL: Force full viewport usage */
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Prevent any default centering/constraints */
+body {
+  @apply bg-slate-900 text-white;
+}
+
+@keyframes pulseSlow {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.animate-pulse.slow {
+  animation: pulseSlow 4s ease-in-out infinite;
+}

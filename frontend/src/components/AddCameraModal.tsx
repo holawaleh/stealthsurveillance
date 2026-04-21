@@ -3,87 +3,82 @@ import { X, Camera } from 'lucide-react';
 
 interface AddCameraModalProps {
   onClose: () => void;
-  onSuccess: (camera: { id: string; name: string; location: string }) => void;
+  onSuccess: (camera: { name: string; provision_code: string }) => void;
 }
 
 export function AddCameraModal({ onClose, onSuccess }: AddCameraModalProps) {
- 
   const [name, setName] = useState('');
-  const [location, setLocation] = useState('');
+  const [provisionCode, setProvisionCode] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!name || !location) {
-    setError('All fields are required');
-    return;
-  }
+    if (!name || !provisionCode) {
+      setError('All fields are required');
+      return;
+    }
 
-  setLoading(true);
-  setError('');
+    setLoading(true);
+    setError('');
 
-  // simulate async behavior
-  await new Promise((res) => setTimeout(res, 300));
-
-  onSuccess({
-    id: crypto.randomUUID(),
-    name,
-    location,
-  });
-
-  setLoading(false);
-};
-
+    try {
+      onSuccess({ name, provision_code: provisionCode });
+      // Reset on success
+      setName('');
+      setProvisionCode('');
+    } catch (err) {
+      setError('Failed to add camera');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-slate-800 rounded-2xl border border-slate-700 max-w-md w-full p-6 shadow-2xl">
-        <div className="flex items-center justify-between mb-6">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full">
+        <div className="flex items-center justify-between p-6 border-b border-slate-700">
           <div className="flex items-center gap-3">
-            <div className="bg-blue-600 p-2 rounded-lg">
-              <Camera className="w-5 h-5 text-white" />
+            <div className="bg-blue-600/20 p-2 rounded-lg">
+              <Camera className="w-5 h-5 text-blue-400" />
             </div>
-            <h2 className="text-xl font-bold text-white">Add New Camera</h2>
+            <h2 className="text-xl font-bold text-white">Add Camera</h2>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-slate-700 rounded-lg transition"
+            className="p-2 hover:bg-slate-700 rounded-lg transition text-slate-400"
           >
-            <X className="w-5 h-5 text-slate-400" />
+            <X className="w-5 h-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
+            <label className="block text-sm font-medium text-slate-300 mb-2">
               Camera Name
             </label>
             <input
-              id="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              required
-              placeholder="Front Door Camera"
-              className="w-full px-4 py-2.5 bg-slate-900/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-500 transition"
+              placeholder="e.g., Front Gate Camera"
+              className="w-full px-4 py-2 bg-slate-900/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
             />
           </div>
 
           <div>
-            <label htmlFor="location" className="block text-sm font-medium text-slate-300 mb-2">
-              Location
+            <label className="block text-sm font-medium text-slate-300 mb-2">
+              Provision Code
             </label>
             <input
-              id="location"
               type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              required
-              placeholder="Main Entrance"
-              className="w-full px-4 py-2.5 bg-slate-900/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-500 transition"
+              value={provisionCode}
+              onChange={(e) => setProvisionCode(e.target.value.toUpperCase())}
+              placeholder="e.g., ABC123DEF456"
+              className="w-full px-4 py-2 bg-slate-900/50 border border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white uppercase"
             />
+            <p className="text-xs text-slate-500 mt-1">Get this from your device label or setup guide</p>
           </div>
 
           {error && (
@@ -92,20 +87,20 @@ export function AddCameraModal({ onClose, onSuccess }: AddCameraModalProps) {
             </div>
           )}
 
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition"
+              className="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white rounded-lg transition"
+              className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white rounded-lg transition font-medium"
             >
-              {loading ? 'Adding...' : 'Add Camera'}
+              {loading ? 'Claiming...' : 'Claim Device'}
             </button>
           </div>
         </form>

@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { LogIn, UserPlus, Video, Shield } from 'lucide-react';
+import { LogIn, Video, Shield, AlertCircle } from 'lucide-react';
 
 export function Auth() {
-  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn, signUp } = useAuth();
+  const { signIn } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,15 +15,14 @@ export function Auth() {
     setLoading(true);
 
     try {
-      const { error } = isLogin
-        ? await signIn(email, password)
-        : await signUp(email, password);
+      const result = await signIn(email, password);
 
-      if (error) {
-        setError(error.message);
+      if (result.error) {
+        setError(result.error.message);
       }
     } catch (err) {
       setError('An unexpected error occurred');
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -44,7 +42,7 @@ export function Auth() {
             Surveillance System
           </h2>
           <p className="text-slate-400 text-center mb-8">
-            {isLogin ? 'Sign in to your account' : 'Create a new account'}
+            Sign in to your account
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -80,7 +78,8 @@ export function Auth() {
             </div>
 
             {error && (
-              <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-3">
+              <div className="bg-red-500/10 border border-red-500/50 rounded-lg p-3 flex items-start gap-2">
+                <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-red-400">{error}</p>
               </div>
             )}
@@ -91,33 +90,20 @@ export function Auth() {
               className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-slate-600 text-white font-semibold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30"
             >
               {loading ? (
-                <span>Loading...</span>
+                <span>Signing in...</span>
               ) : (
                 <>
-                  {isLogin ? <LogIn className="w-5 h-5" /> : <UserPlus className="w-5 h-5" />}
-                  {isLogin ? 'Sign In' : 'Sign Up'}
+                  <LogIn className="w-5 h-5" />
+                  Sign In
                 </>
               )}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <button
-              type="button"
-              onClick={() => {
-                setIsLogin(!isLogin);
-                setError('');
-              }}
-              className="text-slate-400 hover:text-blue-400 text-sm transition"
-            >
-              {isLogin ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
-            </button>
-          </div>
-
           <div className="mt-8 pt-6 border-t border-slate-700">
             <div className="flex items-center justify-center gap-2 text-slate-500 text-sm">
               <Shield className="w-4 h-4" />
-              <span>Secure authentication powered by Supabase</span>
+              <span>Secured with JWT authentication</span>
             </div>
           </div>
         </div>

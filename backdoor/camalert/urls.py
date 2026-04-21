@@ -6,4 +6,5 @@ urlpatterns = [
     # route to apps
     path("api/auth/", include("users.urls")),
     path("api/devices/", include("devices.urls")),
+    path("api/events/", include("events.urls")),
 ]

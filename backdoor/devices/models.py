@@ -14,16 +14,23 @@ class Device(TenantScopedModel):
 
     name = models.CharField(max_length=255)
 
+    # Device identity (used AFTER claim)
     api_key = models.CharField(
-        max_length=64, unique=True, db_index=True, blank=False, null=False
+        max_length=64, unique=True, db_index=True, blank=True, null=True
     )
 
-    status = models.CharField(max_length=20, default="offline")
+    # Provisioning / claim
+    provision_code = models.CharField(max_length=64, unique=True, null=True, blank=True)
 
+    is_claimed = models.BooleanField(default=False)
+    claimed_at = models.DateTimeField(null=True, blank=True)
+
+    status = models.CharField(max_length=20, default="offline")
     last_seen = models.DateTimeField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
-        if not self.api_key:
+        # Only generate API key AFTER claim
+        if self.is_claimed and not self.api_key:
             self.api_key = generate_api_key()
         super().save(*args, **kwargs)
 
