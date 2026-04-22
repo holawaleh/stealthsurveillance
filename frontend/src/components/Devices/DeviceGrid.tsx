@@ -9,14 +9,22 @@ type Device = {
   name: string;
   provision_code: string;
   api_key: string;
+
+  is_online?: boolean;
+  last_seen?: string;
+  snapshot_count?: number;
 };
 
 type Props = {
   refreshKey?: number;
+  onDevicesLoaded?: (
+    devices: Device[]
+  ) => void;
 };
 
 export default function DeviceGrid({
   refreshKey,
+  onDevicesLoaded,
 }: Props) {
   const [devices, setDevices] = useState<
     Device[]
@@ -28,7 +36,6 @@ export default function DeviceGrid({
   const [error, setError] =
     useState("");
 
-  // 🔹 Fetch tenant devices
   const fetchDevices = async () => {
     try {
       setLoading(true);
@@ -38,6 +45,9 @@ export default function DeviceGrid({
       );
 
       setDevices(data);
+
+      // expose upward
+      onDevicesLoaded?.(data);
     } catch (err: any) {
       console.error(err);
 
@@ -53,7 +63,7 @@ export default function DeviceGrid({
     fetchDevices();
   }, [refreshKey]);
 
-  // 🔹 Loading state
+  // LOADING
   if (loading) {
     return (
       <div className="text-slate-400">
@@ -62,7 +72,7 @@ export default function DeviceGrid({
     );
   }
 
-  // 🔹 Error state
+  // ERROR
   if (error) {
     return (
       <div className="bg-red-500/20 text-red-400 p-4 rounded">
@@ -71,7 +81,7 @@ export default function DeviceGrid({
     );
   }
 
-  // 🔹 Empty state
+  // EMPTY
   if (devices.length === 0) {
     return (
       <div className="bg-slate-800 border border-dashed border-slate-700 rounded-xl p-10 text-center">
@@ -88,7 +98,7 @@ export default function DeviceGrid({
     );
   }
 
-  // 🔹 Device Grid
+  // GRID
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 

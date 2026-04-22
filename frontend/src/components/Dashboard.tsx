@@ -6,12 +6,24 @@ import DeviceGrid from "./Devices/DeviceGrid";
 
 import ClaimDeviceModal from "./Devices/ClaimDeviceModal";
 
+import DashboardStats from "./Stats/DashboardStats";
+
+import ActivityFeed from "./Events/ActivityFeed";
+
+type Device = {
+  is_online?: boolean;
+};
+
 export default function Dashboard() {
   const [isModalOpen, setIsModalOpen] =
     useState(false);
 
   const [refreshKey, setRefreshKey] =
     useState(0);
+
+  const [devices, setDevices] = useState<
+    Device[]
+  >([]);
 
   return (
     <DashboardLayout active="Dashboard">
@@ -29,6 +41,9 @@ export default function Dashboard() {
         </p>
 
       </div>
+
+      {/* STATS */}
+      <DashboardStats devices={devices} />
 
       {/* HEADER */}
       <div className="mb-6 flex items-center justify-between">
@@ -49,7 +64,15 @@ export default function Dashboard() {
       </div>
 
       {/* DEVICE GRID */}
-      <DeviceGrid refreshKey={refreshKey} />
+      <DeviceGrid
+        refreshKey={refreshKey}
+        onDevicesLoaded={setDevices}
+      />
+
+      {/* ACTIVITY FEED */}
+      <div className="mt-10">
+        <ActivityFeed />
+      </div>
 
       {/* MODAL */}
       <ClaimDeviceModal
