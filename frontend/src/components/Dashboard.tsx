@@ -1,7 +1,69 @@
+import { useState } from "react";
+
+import DashboardLayout from "./Layout/DashboardLayout";
+
+import DeviceGrid from "./Devices/DeviceGrid";
+
+import ClaimDeviceModal from "./Devices/ClaimDeviceModal";
+
 export default function Dashboard() {
+  const [isModalOpen, setIsModalOpen] =
+    useState(false);
+
+  const [refreshKey, setRefreshKey] =
+    useState(0);
+
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
-    </div>
+    <DashboardLayout active="Dashboard">
+
+      {/* HERO */}
+      <div className="mb-8">
+
+        <h1 className="text-3xl font-bold mb-2">
+          Dashboard
+        </h1>
+
+        <p className="text-slate-400">
+          Monitor and manage your surveillance
+          infrastructure.
+        </p>
+
+      </div>
+
+      {/* HEADER */}
+      <div className="mb-6 flex items-center justify-between">
+
+        <h2 className="text-2xl font-semibold">
+          Your Devices
+        </h2>
+
+        <button
+          onClick={() =>
+            setIsModalOpen(true)
+          }
+          className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition"
+        >
+          + Claim Device
+        </button>
+
+      </div>
+
+      {/* DEVICE GRID */}
+      <DeviceGrid refreshKey={refreshKey} />
+
+      {/* MODAL */}
+      <ClaimDeviceModal
+        isOpen={isModalOpen}
+        onClose={() =>
+          setIsModalOpen(false)
+        }
+        onSuccess={() =>
+          setRefreshKey(
+            (prev) => prev + 1
+          )
+        }
+      />
+
+    </DashboardLayout>
   );
 }

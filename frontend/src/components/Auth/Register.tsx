@@ -7,7 +7,7 @@ export default function Register() {
   const [form, setForm] = useState({
     email: "",
     password: "",
-    tenant_name: "",
+    Owner_name: "",
     phone_number: "",
     area: "",
   });
