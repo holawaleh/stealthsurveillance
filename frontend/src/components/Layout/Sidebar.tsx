@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+} from "react-router-dom";
 
 type Props = {
-  active?: string;
-
   sidebarOpen: boolean;
 
   setSidebarOpen: (
@@ -11,10 +12,11 @@ type Props = {
 };
 
 export default function Sidebar({
-  active,
   sidebarOpen,
   setSidebarOpen,
 }: Props) {
+  const location = useLocation();
+
   const items = [
     {
       name: "Dashboard",
@@ -75,24 +77,30 @@ export default function Sidebar({
       {/* NAV */}
       <nav className="flex-1 p-4 space-y-2">
 
-        {items.map((item) => (
-          <Link
-            key={item.name}
-            to={item.path}
+        {items.map((item) => {
+          const isActive =
+            location.pathname ===
+            item.path;
 
-            onClick={() =>
-              setSidebarOpen(false)
-            }
+          return (
+            <Link
+              key={item.name}
+              to={item.path}
 
-            className={`block w-full text-left px-4 py-3 rounded-lg transition ${
-              active === item.name
-                ? "bg-blue-600 text-white"
-                : "text-slate-400 hover:bg-slate-800 hover:text-white"
-            }`}
-          >
-            {item.name}
-          </Link>
-        ))}
+              onClick={() =>
+                setSidebarOpen(false)
+              }
+
+              className={`block w-full text-left px-4 py-3 rounded-lg transition ${
+                isActive
+                  ? "bg-blue-600 text-white"
+                  : "text-slate-400 hover:bg-slate-800 hover:text-white"
+              }`}
+            >
+              {item.name}
+            </Link>
+          );
+        })}
 
       </nav>
 

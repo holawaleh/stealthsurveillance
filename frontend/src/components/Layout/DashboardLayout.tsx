@@ -6,12 +6,10 @@ import Topbar from "./Topbar";
 
 type Props = {
   children: React.ReactNode;
-  active?: string;
 };
 
 export default function DashboardLayout({
   children,
-  active,
 }: Props) {
   const [sidebarOpen, setSidebarOpen] =
     useState(false);
@@ -31,11 +29,8 @@ export default function DashboardLayout({
 
       {/* SIDEBAR */}
       <Sidebar
-        active={active}
         sidebarOpen={sidebarOpen}
-        setSidebarOpen={
-          setSidebarOpen
-        }
+        setSidebarOpen={setSidebarOpen}
       />
 
       {/* MAIN */}
@@ -54,6 +49,7 @@ export default function DashboardLayout({
         </main>
 
       </div>
+
     </div>
   );
 }

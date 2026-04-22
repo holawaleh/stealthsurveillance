@@ -2,7 +2,7 @@ import DashboardLayout from "../components/Layout/DashboardLayout";
 
 export default function LogsPage() {
   return (
-    <DashboardLayout active="Logs">
+    <DashboardLayout >
 
       <h1 className="text-3xl font-bold mb-4">
         Logs
