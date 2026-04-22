@@ -1,15 +1,15 @@
 import DashboardLayout from "../components/Layout/DashboardLayout";
 
-export default function SettingsPage() {
+export default function LogsPage() {
   return (
-    <DashboardLayout active="Settings">
+    <DashboardLayout active="Logs">
 
       <h1 className="text-3xl font-bold mb-4">
-        Settings
+        Logs
       </h1>
 
       <p className="text-slate-400">
-        User and platform settings.
+        System logs and audit records.
       </p>
 
     </DashboardLayout>
