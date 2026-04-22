@@ -1,6 +1,7 @@
-const BASE_URL = "https://stealthsurveillance.onrender.com/api";
+const BASE_URL =
+  "https://stealthsurveillance.onrender.com/api";
 
-import { getToken } from "./token";
+import { getAccessToken } from "./token";
 
 export const api = async (
   endpoint: string,
@@ -8,18 +9,24 @@ export const api = async (
   body?: any,
   customToken?: string
 ) => {
-  const token = customToken || getToken();
+  const token =
+    customToken || getAccessToken();
 
-  const res = await fetch(`${BASE_URL}${endpoint}`, {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      ...(token && {
-        Authorization: `Bearer ${token}`,
-      }),
-    },
-    body: body ? JSON.stringify(body) : undefined,
-  });
+  const res = await fetch(
+    `${BASE_URL}${endpoint}`,
+    {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        ...(token && {
+          Authorization: `Bearer ${token}`,
+        }),
+      },
+      body: body
+        ? JSON.stringify(body)
+        : undefined,
+    }
+  );
 
   let data;
 
@@ -30,7 +37,9 @@ export const api = async (
   }
 
   if (!res.ok) {
-    throw new Error(data?.detail || "Request failed");
+    throw new Error(
+      data?.detail || "Request failed"
+    );
   }
 
   return data;
