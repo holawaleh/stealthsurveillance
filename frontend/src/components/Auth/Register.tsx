@@ -7,64 +7,158 @@ export default function Register() {
   const [form, setForm] = useState({
     email: "",
     password: "",
-    Owner_name: "",
+    tenant_name: "",
     phone_number: "",
     area: "",
   });
 
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
+  const [loading, setLoading] =
+    useState(false);
 
-  const handleSubmit = async (e: any) => {
+  const [success, setSuccess] =
+    useState("");
+
+  const [error, setError] =
+    useState("");
+
+  const handleSubmit = async (
+    e: any
+  ) => {
     e.preventDefault();
+
     setLoading(true);
     setError("");
     setSuccess("");
 
     try {
       await register(form);
-      setSuccess("Account created successfully. You can now login.");
+
+      setSuccess(
+        "Account created successfully. You can now login."
+      );
+
+      setForm({
+        email: "",
+        password: "",
+        tenant_name: "",
+        phone_number: "",
+        area: "",
+      });
+
     } catch (err: any) {
-      setError("Registration failed");
+      console.error(err);
+
+      setError(
+        err?.message ||
+        "Registration failed"
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4"
+    >
 
+      {/* ERROR */}
       {error && (
-        <div className="bg-red-500/20 text-red-400 p-2 rounded text-sm">
+        <div className="bg-red-500/20 border border-red-500/30 text-red-400 p-3 rounded-lg text-sm">
           {error}
         </div>
       )}
 
+      {/* SUCCESS */}
       {success && (
-        <div className="bg-green-500/20 text-green-400 p-2 rounded text-sm">
+        <div className="bg-green-500/20 border border-green-500/30 text-green-400 p-3 rounded-lg text-sm">
           {success}
         </div>
       )}
 
-      {Object.keys(form).map((key) => (
-        <input
-          key={key}
-          type={key === "password" ? "password" : "text"}
-          placeholder={key.replace("_", " ")}
-          className="w-full p-3 rounded bg-slate-700"
-          onChange={(e) =>
-            setForm({ ...form, [key]: e.target.value })
-          }
-        />
-      ))}
+      {/* EMAIL */}
+      <input
+        type="email"
+        placeholder="Email"
+        value={form.email}
+        className="w-full p-3 rounded-lg bg-slate-700 outline-none border border-slate-600 focus:border-blue-500"
+        onChange={(e) =>
+          setForm({
+            ...form,
+            email: e.target.value,
+          })
+        }
+      />
 
+      {/* PASSWORD */}
+      <input
+        type="password"
+        placeholder="Password"
+        value={form.password}
+        className="w-full p-3 rounded-lg bg-slate-700 outline-none border border-slate-600 focus:border-blue-500"
+        onChange={(e) =>
+          setForm({
+            ...form,
+            password: e.target.value,
+          })
+        }
+      />
+
+      {/* OWNER NAME */}
+      <input
+        type="text"
+        placeholder="Owner Name"
+        value={form.tenant_name}
+        className="w-full p-3 rounded-lg bg-slate-700 outline-none border border-slate-600 focus:border-blue-500"
+        onChange={(e) =>
+          setForm({
+            ...form,
+            tenant_name:
+              e.target.value,
+          })
+        }
+      />
+
+      {/* PHONE */}
+      <input
+        type="text"
+        placeholder="Phone Number"
+        value={form.phone_number}
+        className="w-full p-3 rounded-lg bg-slate-700 outline-none border border-slate-600 focus:border-blue-500"
+        onChange={(e) =>
+          setForm({
+            ...form,
+            phone_number:
+              e.target.value,
+          })
+        }
+      />
+
+      {/* AREA */}
+      <input
+        type="text"
+        placeholder="Area"
+        value={form.area}
+        className="w-full p-3 rounded-lg bg-slate-700 outline-none border border-slate-600 focus:border-blue-500"
+        onChange={(e) =>
+          setForm({
+            ...form,
+            area: e.target.value,
+          })
+        }
+      />
+
+      {/* BUTTON */}
       <button
         disabled={loading}
-        className="w-full bg-green-600 py-3 rounded hover:bg-green-700 transition active:scale-95 disabled:opacity-50"
+        className="w-full bg-green-600 py-3 rounded-lg hover:bg-green-700 transition active:scale-95 disabled:opacity-50"
       >
-        {loading ? "Creating..." : "Register"}
+        {loading
+          ? "Creating..."
+          : "Register"}
       </button>
+
     </form>
   );
 }

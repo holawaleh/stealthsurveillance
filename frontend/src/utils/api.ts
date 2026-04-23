@@ -16,12 +16,17 @@ export const api = async (
     `${BASE_URL}${endpoint}`,
     {
       method,
+
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type":
+          "application/json",
+
         ...(token && {
-          Authorization: `Bearer ${token}`,
+          Authorization:
+            `Bearer ${token}`,
         }),
       },
+
       body: body
         ? JSON.stringify(body)
         : undefined,
@@ -36,9 +41,40 @@ export const api = async (
     data = null;
   }
 
+  // HANDLE ERRORS
   if (!res.ok) {
+
+    // SIMPLE DETAIL ERROR
+    if (data?.detail) {
+      throw new Error(data.detail);
+    }
+
+    // DJANGO VALIDATION ERRORS
+    if (
+      data &&
+      typeof data === "object"
+    ) {
+      const firstKey =
+        Object.keys(data)[0];
+
+      const firstError =
+        data[firstKey];
+
+      if (
+        Array.isArray(firstError)
+      ) {
+        throw new Error(
+          `${firstKey}: ${firstError[0]}`
+        );
+      }
+
+      throw new Error(
+        JSON.stringify(data)
+      );
+    }
+
     throw new Error(
-      data?.detail || "Request failed"
+      "Request failed"
     );
   }
 
