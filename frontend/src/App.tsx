@@ -14,7 +14,6 @@ import DevicesPage from "./pages/DevicesPage";
 import EventsPage from "./pages/EventsPage";
 import LogsPage from "./pages/LogsPage";
 import SettingsPage from "./pages/SettingsPage";
-
 function ProtectedRoute({
   children,
 }: any) {
