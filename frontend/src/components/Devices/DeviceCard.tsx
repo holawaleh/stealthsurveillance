@@ -51,7 +51,7 @@ export default function DeviceCard({
       </div>
 
       {/* BODY */}
-      <div className="space-y-4 text-sm">
+      <div className="space-y-3 text-sm">
 
         {/* LAST SEEN */}
         <div className="flex justify-between">
@@ -91,7 +91,7 @@ export default function DeviceCard({
       </div>
 
       {/* FOOTER */}
-      <div className="mt-6 pt-4 border-t border-slate-700 flex justify-end">
+      <div className="mt-4 pt-3 border-t border-slate-700 flex justify-end">
 
         <button className="text-sm bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-lg transition">
           View Details

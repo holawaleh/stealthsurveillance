@@ -1,6 +1,5 @@
 import {
-  Link,
-  useLocation,
+  NavLink,
 } from "react-router-dom";
 
 type Props = {
@@ -15,8 +14,6 @@ export default function Sidebar({
   sidebarOpen,
   setSidebarOpen,
 }: Props) {
-  const location = useLocation();
-
   const items = [
     {
       name: "Dashboard",
@@ -48,10 +45,10 @@ export default function Sidebar({
     <aside
       className={`
         fixed md:static z-50 top-0 left-0
-        h-screen w-[260px] md:w-64
+        h-screen w-[250px] md:w-64
         bg-slate-900 border-r border-slate-800
         flex flex-col
-        transform transition-transform duration-300
+        transform transition-transform duration-300 ease-in-out
 
         ${
           sidebarOpen
@@ -62,45 +59,42 @@ export default function Sidebar({
     >
 
       {/* LOGO */}
-      <div className="p-6 border-b border-slate-800">
+      <div className="p-5 border-b border-slate-800">
 
-        <h1 className="text-2xl font-bold text-white">
+        <h1 className="text-xl md:text-2xl font-bold text-white">
           SilentGuard
         </h1>
 
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-xs md:text-sm text-slate-400 mt-1">
           Surveillance Platform
         </p>
 
       </div>
 
       {/* NAV */}
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className="flex-1 p-3 space-y-2 overflow-y-auto">
 
-        {items.map((item) => {
-          const isActive =
-            location.pathname ===
-            item.path;
+        {items.map((item) => (
+          <NavLink
+            key={item.name}
 
-          return (
-            <Link
-              key={item.name}
-              to={item.path}
+            to={item.path}
 
-              onClick={() =>
-                setSidebarOpen(false)
-              }
+            onClick={() =>
+              setSidebarOpen(false)
+            }
 
-              className={`block w-full px-4 py-3 rounded-lg transition ${
+            className={({ isActive }) =>
+              `block w-full px-4 py-3 rounded-lg transition ${
                 isActive
                   ? "bg-blue-600 text-white"
                   : "text-slate-400 hover:bg-slate-800 hover:text-white"
-              }`}
-            >
-              {item.name}
-            </Link>
-          );
-        })}
+              }`
+            }
+          >
+            {item.name}
+          </NavLink>
+        ))}
 
       </nav>
 

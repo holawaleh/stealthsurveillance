@@ -29,7 +29,7 @@ export default function Dashboard() {
     <DashboardLayout>
 
       {/* HERO */}
-      <div className="mb-8">
+      <div className="mb-5 md:mb-8">
 
         <h1 className="text-2xl md:text-3xl font-bold mb-2">
           Dashboard
