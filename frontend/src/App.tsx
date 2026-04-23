@@ -10,13 +10,9 @@ import { useAuth } from "./contexts/AuthContext";
 import LandingPage from "./Landing/LandingPage";
 
 import DashboardPage from "./pages/DashboardPage";
-
 import DevicesPage from "./pages/DevicesPage";
-
 import EventsPage from "./pages/EventsPage";
-
 import LogsPage from "./pages/LogsPage";
-
 import SettingsPage from "./pages/SettingsPage";
 
 function ProtectedRoute({

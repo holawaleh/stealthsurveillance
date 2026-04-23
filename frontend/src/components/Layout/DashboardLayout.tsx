@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import Sidebar from "./Sidebar";
-
 import Topbar from "./Topbar";
 
 type Props = {
@@ -49,7 +48,6 @@ export default function DashboardLayout({
         </main>
 
       </div>
-
     </div>
   );
 }

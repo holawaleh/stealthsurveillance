@@ -91,7 +91,7 @@ export default function Sidebar({
                 setSidebarOpen(false)
               }
 
-              className={`block w-full text-left px-4 py-3 rounded-lg transition ${
+              className={`block w-full px-4 py-3 rounded-lg transition ${
                 isActive
                   ? "bg-blue-600 text-white"
                   : "text-slate-400 hover:bg-slate-800 hover:text-white"

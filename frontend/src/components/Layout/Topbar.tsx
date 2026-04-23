@@ -38,26 +38,13 @@ export default function Topbar({
       </div>
 
       {/* RIGHT */}
-      <div className="flex items-center gap-4">
+      <button
+        onClick={logout}
+        className="bg-red-600 hover:bg-red-700 px-3 md:px-4 py-2 rounded-lg transition text-sm"
+      >
+        Logout
+      </button>
 
-        {/* STATUS */}
-        <div className="hidden md:flex items-center gap-2 text-sm text-green-400">
-
-          <span className="w-2 h-2 rounded-full bg-green-400"></span>
-
-          System Active
-
-        </div>
-
-        {/* LOGOUT */}
-        <button
-          onClick={logout}
-          className="bg-red-600 hover:bg-red-700 px-3 md:px-4 py-2 rounded-lg transition text-sm"
-        >
-          Logout
-        </button>
-
-      </div>
     </header>
   );
 }
