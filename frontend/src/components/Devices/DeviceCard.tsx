@@ -21,13 +21,13 @@ export default function DeviceCard({
     device.is_online ?? false;
 
   return (
-    <div className="bg-slate-800 border border-slate-700 rounded-2xl p-5 hover:border-blue-500 transition">
+    <div className="bg-slate-800 border border-slate-700 rounded-2xl p-4 md:p-5 hover:border-blue-500 transition">
 
       {/* HEADER */}
       <div className="flex items-start justify-between mb-5">
 
         <div>
-          <h3 className="text-xl font-semibold">
+          <h3 className="text-lg md:text-xl font-semibold">
             {device.name}
           </h3>
 

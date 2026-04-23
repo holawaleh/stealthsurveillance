@@ -19,7 +19,7 @@ export default function EventCard({
   };
 
   return (
-    <div className="bg-slate-800 border border-slate-700 rounded-xl p-4 flex items-center justify-between">
+    <div className="bg-slate-800 border border-slate-700 rounded-xl p-4 flex flex-col md:flex-row gap-3 md:gap-0 md:items-center md:justify-between">
 
       <div>
         <h4 className="font-medium">

@@ -26,12 +26,12 @@ export default function Dashboard() {
   >([]);
 
   return (
-    <DashboardLayout active="Dashboard">
+    <DashboardLayout>
 
       {/* HERO */}
       <div className="mb-8">
 
-        <h1 className="text-3xl font-bold mb-2">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">
           Dashboard
         </h1>
 
@@ -48,7 +48,7 @@ export default function Dashboard() {
       {/* HEADER */}
       <div className="mb-6 flex items-center justify-between">
 
-        <h2 className="text-2xl font-semibold">
+        <h2 className="text-xl md:text-2xl font-semibold">
           Your Devices
         </h2>
 

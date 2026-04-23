@@ -48,7 +48,7 @@ export default function Sidebar({
     <aside
       className={`
         fixed md:static z-50 top-0 left-0
-        h-screen w-64
+        h-screen w-[260px] md:w-64
         bg-slate-900 border-r border-slate-800
         flex flex-col
         transform transition-transform duration-300
